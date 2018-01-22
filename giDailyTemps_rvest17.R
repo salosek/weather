@@ -1,7 +1,16 @@
 ## giDailyTemps_rvest17.R Scrape Daily Hi/Lo Temps from Accuweather for GI
 
+##install.packages("openxlsx")
 ##installed.packages("rvest")
 ##install.packages("rJava")
+
+if(!dir.exists("data")){
+      dir.create("data")
+  } else { 
+      message("directory data already exists")
+  }
+getwd()
+dir(path = ".")
 
 library("rvest")
 #library("rJava")
@@ -11,7 +20,7 @@ library(openxlsx)
 cat("\014")
 ## Clear the data Environment
 rm(list=ls())
-setwd("C:/R_Projects")
+setwd("C:/rProjects/weather")
 
 dtab <- read_html("https://www.accuweather.com/en/us/grand-island-ne/68801/january-weather/329504?monyr=1/1/2017&view=table")
 tab <- html_nodes(dtab, css = "table")
@@ -92,16 +101,16 @@ gitab$TMaxGI <- sub(",.*","",gitab$HiLo)
 gitab$TMinGI <- sub(".*,","",gitab$HiLo)
 gitab$HiLo <- NULL
 
-gitab$TMaxGI <- as.numeric(gsub("°","",gitab$TMaxGI))
-gitab$TMinGI <- as.numeric(gsub("°","",gitab$TMinGI))
+gitab$TMaxGI <- as.numeric(gsub("Â°","",gitab$TMaxGI))
+gitab$TMinGI <- as.numeric(gsub("Â°","",gitab$TMinGI))
 
 gitab$AvgHiLo <- chartr("/",",",gitab$AvgHiLo)
 gitab$AvgHigh <- sub(",.*","",gitab$AvgHiLo)
 gitab$AvgLow <- sub(".*,","",gitab$AvgHiLo)
 gitab$AvgHiLo <- NULL
 
-gitab$AvgHigh <- as.numeric(gsub("°","",gitab$AvgHigh))
-gitab$AvgLow <- as.numeric(gsub("°","",gitab$AvgLow))
+gitab$AvgHigh <- as.numeric(gsub("Â°","",gitab$AvgHigh))
+gitab$AvgLow <- as.numeric(gsub("Â°","",gitab$AvgLow))
 
 ##count(gitab,vars=year(gitab$Date))
 write.csv(gitab, "./data/2017GIWeather_forecast.csv", row.names=FALSE)
@@ -109,7 +118,7 @@ gitab$Forecast <- NULL
 write.csv(gitab, "./data/2017GIWeather.csv", row.names=FALSE)
 write.xlsx(gitab, file = "./data/2017GIWeather99.xlsx", rowNames=FALSE, colNames = TRUE)
 
-print(gitab[335:365,])     ## Jan 1:31, Feb 32:59, Mar 60:90, Apr 91:120, May 121:151, Jun 152:181
+print(gitab[1:365,])     ## Jan 1:31, Feb 32:59, Mar 60:90, Apr 91:120, May 121:151, Jun 152:181
                            ## Jul 182:212, Aug 213:243, Sep 244:273, Oct 274:304, Nov 305:334, Dec 335:365
 print(Sys.Date())
 
