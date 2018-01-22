@@ -11,7 +11,7 @@ library(openxlsx)
 cat("\014")
 ## Clear the data Environment
 rm(list=ls())
-setwd("C:/R_Projects")
+setwd("C:/rProjects/weather")
 
 dtab <- read_html("https://www.accuweather.com/en/us/grand-island-ne/68801/january-weather/329504?monyr=1/1/2018&view=table")
 tab <- html_nodes(dtab, css = "table")
