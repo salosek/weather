@@ -1,4 +1,4 @@
-## giDailyTemps_rvest18.R Scrape Daily Hi/Lo Temps from Accuweather for GI
+## giDailyTemps_rvest18.R Scrape Daily Hi/Lo Temps from Accuweather for GI station
 
 ##installed.packages("rvest")
 ##install.packages("rJava")
